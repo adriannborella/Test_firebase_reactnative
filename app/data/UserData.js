@@ -2,6 +2,28 @@ import * as firebase from 'firebase';
 
 const tabla = 'clientes'
 
+export function modoOffline() {
+    firebase.database().goOffline();
+    console.log("Modo OFF line")
+}
+
+export function modoOnline() {
+    firebase.database().goOnline();
+
+    console.log("Modo ON line")
+}
+
+export function EstadoConexion(){
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", function(snap) {
+    if (snap.val() === true) {
+        alert("connected");
+    } else {
+        alert("not connected");
+    }
+    });
+}
+
 export function saveCliente(registro, mode, key) {    
     if(mode == 'm'){
         firebase.database().ref(tabla + '/' + key).set(registro)

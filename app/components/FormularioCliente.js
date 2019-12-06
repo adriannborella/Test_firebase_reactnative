@@ -5,7 +5,7 @@ import { ClienteOptions, ClienteStruct } from '../forms/clienteForm'
 import t from 'tcomb-form-native'
 const Form = t.form.Form
 
-import { saveCliente, deleteCliente, getClientes } from '../data/UserData'
+import { saveCliente, deleteCliente, getClientes, EstadoConexion, modoOnline, modoOffline } from '../data/UserData'
 
 export default class FormularioCliente extends React.Component {
     constructor(){
@@ -48,6 +48,10 @@ export default class FormularioCliente extends React.Component {
 
     editar_elemento(item){
         this.setState({key:item.key, modo:'m', dataForm: item, showModal: true})
+    }
+
+    get_estadoConexion() {
+        EstadoConexion()
     }
 
     eliminar_item(){
@@ -109,8 +113,11 @@ export default class FormularioCliente extends React.Component {
                     }}>                    
                     {this.render_modal()}
                 </Modal>
-                <View style={{ margin:20 }}>
+                <View style={{ margin:10 }}>
                     <Button title='Agregar' onPress={() => this.setState({showModal: true, modo: 'a', dataForm: { full_name : '', date_of_birth: '' }})}></Button>                    
+                    <Button title='OFFLINE' onPress={() => modoOffline()}></Button>                    
+                    <Button title='Consultar Estado' onPress={this.get_estadoConexion.bind(this)}></Button>                    
+                    <Button title='ONLINE' onPress={() => modoOnline()}></Button>                    
                     
                     
                     <ScrollView>
